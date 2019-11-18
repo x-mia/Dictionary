@@ -1,0 +1,2 @@
+# Dictionary
+Estonian-Slovak dictionary
