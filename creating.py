@@ -1,4 +1,5 @@
 import re
+import pandas
 
 
 def load_data1():
@@ -188,6 +189,25 @@ def correct(estonian_slovak):
 
 #########################################################
 
+def write_data(data, filename):
+    with open(filename, "w", encoding="utf8") as f:
+        for key, value in sorted(data.items()):
+            f.writelines(key+"\t"+", ".join(value)+"\n")
+
+#########################################################
+
+def create_df(dictionary, source, target):
+    temp_dict = {source: [], target: []}
+    for key, values in dictionary.items():
+        for value in values:
+            temp_dict[source].append(key)
+            temp_dict[target].append(value)
+
+
+    return pandas.DataFrame.from_dict(temp_dict)
+
+#########################################################
+
 def create():
     print("Getting common list")
     common_list = get_intersection()
@@ -207,5 +227,13 @@ def create():
             estonian_slovak[estonian_word] = slovak_words
 
     estonian_slovak = correct(estonian_slovak)
-    return (slovak_estonian, estonian_slovak[86:])
+    # write_data(estonian_slovak, "estonian_slovak.txt")
+
+    slovak_estonian_df = create_df(slovak_estonian, "Slovak word", "Estonian word")
+    slovak_estonian_df = slovak_estonian_df.sort_values(by=["Slovak word"])
+    estonian_slovak_df = create_df(estonian_slovak, "Estonian word", "Slovak word")
+    estonian_slovak_df = estonian_slovak_df.sort_values(by=["Estonian word"])
+    # estonian_slovak_df.to_csv("estonian-slovak.csv", index=False)
+
+    return (slovak_estonian_df, estonian_slovak_df)
 #########################################################
