@@ -35,19 +35,26 @@ def correcting(df):
     indices_todrop = []
     classes = {"S":"S", "A":"GUAC", "P":"P", "N":"ON", "V":"XV"}
     for i, row in df.iterrows():
-        est_postag = row['Estonian postag']
-        est_word = row["Estonian word"]
-        svk_postag = row['Slovak postag']
+        est_postag = row['Est. sõnaliik']
+        est_word = row["Eesti sõna"]
+        svk_postag = row['Slov. sõnaliik']
+        svk_word = row["Slovaki sõna"]
         if not est_postag in "".join(classes.values()):
+            continue
+        if len(svk_word.split(" ")) > 1:
             continue
         if "tud" in str(est_word) and est_postag != "A":
             continue
-        if svk_postag == "x" or svk_postag == "-":
+        if svk_postag == "x" or svk_postag == "-" or svk_postag == "Q":
+            continue
+        if svk_postag in "".join(classes.keys()) and not est_postag in classes[svk_postag]:
             indices_todrop.append(i)
-        elif classes[svk_postag] != est_postag:
-            indices_todrop.append(i)
+
+    # my_df = df.iloc[indices_todrop, :]
+    # my_df.to_csv("vymaz.csv", index=False)
     df = df.drop(indices_todrop)
     return df
+
 
 def correct_by_postag(df):
     df['Estonian postag'] = df.apply(add_estonian_postag, axis=1)
