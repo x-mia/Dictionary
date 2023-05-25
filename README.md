@@ -1,6 +1,8 @@
 # Dictionary	 
 Estonian-Slovak dictionary
 
-Estonian Wordnet could be downloaded from here:
+## References
+Please cite [1] if you found the resources in this repository useful.
 
-https://gitlab.keeleressursid.ee/avalik/data/raw/master/estwn/estwn-et-2.3.0.dump.xml?inline=false
+[1] Denisová, M. (2021). [Compiling an Estonian-Slovak Dictionary with English as a Binder.](https://elex.link/elex2021/wp-content/uploads/2021/08/eLex_2021_06_pp107-120.pdf)In Proceedings of the eLex 2021 conference. Lexical Computing CZ, s.r.o., pp. 107–120. 
+
